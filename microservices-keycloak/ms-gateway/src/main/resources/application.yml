@@ -1,0 +1,121 @@
+# Allow unauthenticated access to Keycloak endpoints
+security:
+  ignored: /realms/ecommerce-rta/**
+# Server Configuration
+server:
+  port: 9090
+
+# Spring Configuration
+spring:
+  application:
+    name: ms-gateway
+  # Cloud Gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        # User Service Routes
+        - id: ms-user
+          uri: lb://ms-user
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - StripPrefix=1
+            - TokenRelay=
+        # Room Service Routes
+        - id: ms-room
+          uri: lb://ms-room
+          predicates:
+            - Path=/api/rooms/**
+          filters:
+            - StripPrefix=1
+            - TokenRelay=
+        # Booking Service Routes
+        - id: ms-booking
+          uri: lb://ms-booking
+          predicates:
+            - Path=/api/bookings/**
+          filters:
+            - StripPrefix=1
+            - TokenRelay=
+        # Review Service Routes
+        - id: ms-review
+          uri: lb://ms-review
+          predicates:
+            - Path=/api/reviews/**
+          filters:
+            - StripPrefix=1
+            - TokenRelay=
+        # Stock Service Routes
+        - id: ms-stock
+          uri: lb://ms-stock
+          predicates:
+            - Path=/api/stock/**
+          filters:
+            - StripPrefix=1
+            - TokenRelay=
+        # Event Service Routes
+        - id: ms-event
+          uri: lb://ms-event
+          predicates:
+            - Path=/api/events/**
+          filters:
+            - StripPrefix=1
+            - TokenRelay=
+        # Keycloak Proxy Route
+        - id: keycloak
+          uri: http://localhost:8080
+          predicates:
+            - Path=/realms/ecommerce-rta/**
+          filters:
+            - SetRequestHeader=Host,localhost:8080
+        # Discovery Service Route (optional, for monitoring)
+        - id: ms-discovery
+          uri: http://localhost:8761
+          predicates:
+            - Path=/eureka/**
+  # Security OAuth2
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/ecommerce-rta
+            user-name-attribute: preferred_username
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: ${GATEWAY_CLIENT_ID:gateway-client}
+            client-secret: ${GATEWAY_CLIENT_SECRET:gateway-secret}
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - openid
+              - profile
+              - email
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/ecommerce-rta
+          jwk-set-uri: http://localhost:8080/realms/ecommerce-rta/protocol/openid-connect/certs
+
+# Eureka
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    gateway:
+      enabled: true
