@@ -1,3 +1,4 @@
+    
 package rta.msuser.service;
 
 import lombok.RequiredArgsConstructor;
@@ -74,5 +75,27 @@ public class UserService {
 
     public ActivityLog logActivity(ActivityLog activityLog) {
         return activityLogRepository.save(activityLog);
+    }
+        // --- Initialization logic to create default users on startup ---
+    @jakarta.annotation.PostConstruct
+    public void initDefaultUsers() {
+        createUserIfNotExists("admin@hotel.com", "admin", "admin", "0123456789", "ADMIN");
+        createUserIfNotExists("manager@hotel.com", "manager", "manager", "0123456789", "MANAGER");
+        createUserIfNotExists("staff@hotel.com", "staff", "staff", "0123456789", "STAFF");
+        createUserIfNotExists("client1@email.com", "client1", "client1", "0123456789", "CLIENT");
+        createUserIfNotExists("client2@email.com", "client2", "client2", "0123456789", "CLIENT");
+    }
+
+    private void createUserIfNotExists(String email, String firstName, String lastName, String phone, String role) {
+        if (userRepository.findByEmail(email).isEmpty()) {
+            User user = new User();
+            user.setEmail(email);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setPhone(phone);
+            user.setRole(role);
+            user.setActive(true);
+            userRepository.save(user);
+        }
     }
 }
