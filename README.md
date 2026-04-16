@@ -38,18 +38,18 @@ Each microservice is independently developed, containerized, and communicates vi
 
 | Service Name      | Description                | Developed By | Database | Tech Stack         |
 |-------------------|---------------------------|--------------|----------|--------------------|
-| ms-user           | User management           | [Your Name]  | MySQL    | Spring Boot, JPA   |
-| ms-room           | Room inventory            | [Your Name]  | MySQL    | Spring Boot, JPA   |
-| ms-booking        | Booking/reservations      | [Your Name]  | MySQL    | Spring Boot, JPA   |
-| ms-event          | Events/meetings           | [Your Name]  | MongoDB  | Spring Boot, Mongo |
-| ms-review         | Reviews/ratings           | [Your Name]  | MongoDB  | Spring Boot, Mongo |
-| ms-stock          | Stock/inventory           | [Your Name]  | MySQL    | Spring Boot, JPA   |
-| ms-transport      | Transport bookings        | [Your Name]  | MySQL    | NestJS (Node.js)   |
-| ms-gateway        | API Gateway               | [Your Name]  | -        | Spring Cloud       |
-| ms-discovery      | Eureka Discovery Server   | [Your Name]  | -        | Spring Cloud       |
-| ConfigServer      | Centralized Config        | [Your Name]  | -        | Spring Cloud       |
-| ereuka            | Eureka Discovery Server   | [Your Name]  | -        | Spring Cloud       |
-| keycloak-initializer | Keycloak setup         | [Your Name]  | -        | Java               |
+| ms-user           | User management           | Jasser       | MySQL    | Spring Boot, JPA   |
+| ms-room           | Room inventory            | Ali          | MySQL    | Spring Boot, JPA   |
+| ms-booking        | Booking/reservations      | Ghassen      | MySQL    | Spring Boot, JPA   |
+| ms-event          | Events/meetings           | Mayara       | MongoDB  | Spring Boot, Mongo |
+| ms-review         | Reviews/ratings           | souhail      | MongoDB  | Spring Boot, Mongo |
+| ms-stock          | Stock/inventory           | Hanin        | MySQL    | Spring Boot, JPA   |
+| ms-transport      | Transport bookings        | Team         | MySQL    | NestJS (Node.js)   |
+| ms-gateway        | API Gateway               | Team         | -        | Spring Cloud       |
+| ms-discovery      | Eureka Discovery Server   | Team         | -        | Spring Cloud       |
+| ConfigServer      | Centralized Config        | Team         | -        | Spring Cloud       |
+| ereuka            | Eureka Discovery Server   | Team         | -        | Spring Cloud       |
+| keycloak-initializer | Keycloak setup         | Team         | -        | Java               |
 
 ---
 
@@ -113,10 +113,7 @@ Each microservice is independently developed, containerized, and communicates vi
 
 ---
 
-## Contributors
-- [Your Name] (replace with actual contributors)
 
----
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the DevCore.
